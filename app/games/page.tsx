@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import Link from "next/link"
 import Navigation from "@/components/shared/Navigation"
 import Footer from "@/components/shared/Footer"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
@@ -24,6 +25,7 @@ import EnhancedBackground from "@/components/shared/EnhancedBackground"
 const TrendingGames = () => {
   const trendingGames = [
     {
+      id: "1",
       rank: 1,
       title: "CryptoBoxers Championship",
       players: "24.5K",
@@ -31,6 +33,7 @@ const TrendingGames = () => {
       image: "/placeholder.svg?height=80&width=80&text=CB",
     },
     {
+      id: "2",
       rank: 2,
       title: "Eco Warriors",
       players: "18.2K",
@@ -38,6 +41,7 @@ const TrendingGames = () => {
       image: "/placeholder.svg?height=80&width=80&text=EW",
     },
     {
+      id: "3",
       rank: 3,
       title: "Token Quest",
       players: "16.7K",
@@ -206,12 +210,14 @@ const TrendingGames = () => {
                     </div>
                   </div>
 
-                  <Button
-                    size="sm"
-                    className="bg-orange-500 hover:bg-orange-600 text-black font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  <Link href={game.id ? `/games/${game.id}` : "#"}>
+                    <Button
+                      size="sm"
+                      className="bg-orange-500 hover:bg-orange-600 text-black font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             </motion.div>
