@@ -10,6 +10,10 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  // Ensure all dynamic routes can be served
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 }
 
 export default nextConfig

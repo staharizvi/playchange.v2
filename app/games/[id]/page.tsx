@@ -41,6 +41,30 @@ const games = [
   }
 ]
 
+// Generate fallback game data for any ID
+function getGameById(id: string) {
+  const existingGame = games.find(g => g.id === id)
+  if (existingGame) {
+    return existingGame
+  }
+  
+  // Generate dynamic game data for any ID
+  const categories = ["Action", "Adventure", "Strategy", "RPG", "Puzzle", "Racing", "Sports", "Simulation"]
+  const statuses = ["Live", "Beta", "Coming Soon"]
+  const playerCounts = ["1.2K", "5.7K", "12.3K", "24.5K", "45.2K", "67.8K"]
+  
+  return {
+    id,
+    title: `Game ${id}`,
+    description: `An exciting ${categories[parseInt(id) % categories.length].toLowerCase()} game with amazing features and rewards.`,
+    players: playerCounts[parseInt(id) % playerCounts.length],
+    category: categories[parseInt(id) % categories.length],
+    image: `/placeholder.svg?height=400&width=600&text=Game+${id}`,
+    status: statuses[parseInt(id) % statuses.length],
+    lastPlayed: `${Math.floor(Math.random() * 12) + 1} hours ago`,
+  }
+}
+
 interface GamePageProps {
   params: {
     id: string
@@ -48,9 +72,10 @@ interface GamePageProps {
 }
 
 export default function GamePage({ params }: GamePageProps) {
-  const game = games.find(g => g.id === params.id)
+  const game = getGameById(params.id)
   
-  if (!game) {
+  // Only call notFound() for invalid IDs (non-numeric or empty)
+  if (!params.id || params.id.trim() === '' || (isNaN(Number(params.id)) && !games.some(g => g.id === params.id))) {
     notFound()
   }
 
@@ -58,7 +83,11 @@ export default function GamePage({ params }: GamePageProps) {
 }
 
 export async function generateStaticParams() {
+  // Pre-generate only the main games, allow others to be generated on demand
   return games.map((game) => ({
     id: game.id,
   }))
 }
+
+// Allow dynamic params not in generateStaticParams
+export const dynamicParams = true
