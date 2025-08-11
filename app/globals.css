@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-black text-white overflow-x-hidden;
+    font-family: "Exo 2", sans-serif;
+  }
+}
+
+@layer components {
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255, 111, 0, 0.3);
+  }
+
+  .glow-orange-intense {
+    box-shadow: 0 0 30px rgba(255, 111, 0, 0.6), 0 0 60px rgba(255, 111, 0, 0.3);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 111, 0, 0.8), 0 0 20px rgba(255, 111, 0, 0.4);
+  }
+
+  .border-glow {
+    border: 1px solid rgba(255, 111, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 111, 0, 0.2);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 111, 0, 0.2);
+  }
+
+  .glass-panel-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 111, 0, 0.3);
+  }
+
+  .animated-bg {
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #0b0b0b 50%, #000000 100%);
+    position: relative;
+  }
+
+  .animated-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 111, 0, 0.03) 50%, transparent 70%);
+    animation: shimmer 8s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%,
+    100% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(255, 111, 0, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(255, 111, 0, 0.6), 0 0 80px rgba(255, 111, 0, 0.2);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-10px) rotate(1deg);
+    }
+    66% {
+      transform: translateY(-5px) rotate(-1deg);
+    }
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Gaming-specific animations */
+  @keyframes neon-pulse {
+    0%,
+    100% {
+      text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+    }
+    50% {
+      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor;
+    }
+  }
+
+  .neon-text {
+    animation: neon-pulse 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes hologram {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .hologram-effect {
+    animation: hologram 3s ease-in-out infinite;
+  }
+
+  @keyframes data-stream {
+    0% {
+      transform: translateY(100vh) scaleY(0);
+    }
+    50% {
+      transform: translateY(0) scaleY(1);
+    }
+    100% {
+      transform: translateY(-100vh) scaleY(0);
+    }
+  }
+
+  .data-stream {
+    animation: data-stream 2s linear infinite;
+  }
+}
+
+@layer utilities {
+  .font-exo2 {
+    font-family: "Exo 2", sans-serif;
+  }
+
+  .font-orbitron {
+    font-family: "Orbitron", monospace;
+  }
+}
