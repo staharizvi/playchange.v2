@@ -34,6 +34,7 @@ import {
   ChevronRight,
   MessageSquare,
   Joystick,
+  Crown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -2150,11 +2151,68 @@ const PlatformOverview = () => {
 }
 
 
+// Upgrade Prompt Component
+const UpgradePrompt = () => {
+  const [showPrompt, setShowPrompt] = useState(true)
+
+  if (!showPrompt) return null
+
+  return (
+    <motion.div
+      className="fixed bottom-6 right-6 z-50 max-w-sm"
+      initial={{ opacity: 0, x: 100, scale: 0.8 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      transition={{ delay: 3, duration: 0.5 }}
+    >
+      <Card className="bg-gradient-to-br from-orange-500/90 to-red-500/90 border-orange-400 backdrop-blur-xl">
+        <div className="p-6 relative">
+          <button
+            onClick={() => setShowPrompt(false)}
+            className="absolute top-2 right-2 text-black hover:text-gray-700"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          
+          <motion.div
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            className="w-12 h-12 mb-4"
+          >
+            <Crown className="w-12 h-12 text-yellow-300" />
+          </motion.div>
+          
+          <h3 className="text-xl font-black text-black mb-2 font-exo2">Unlock Premium!</h3>
+          <p className="text-black/80 text-sm mb-4">
+            Get ad-free Play Motion, exclusive games, and premium tournaments for just $7.59/month!
+          </p>
+          
+          <div className="flex space-x-2">
+            <Link href="/store">
+              <Button size="sm" className="bg-black hover:bg-gray-800 text-orange-400 font-bold">
+                Upgrade Now
+              </Button>
+            </Link>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="border-black text-black hover:bg-black hover:text-orange-400"
+              onClick={() => setShowPrompt(false)}
+            >
+              Later
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  )
+}
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <EnhancedBackground />
       <Navigation />
+      <UpgradePrompt />
       <div className="pt-24">
         <HeroBanner />
         <PlatformOverview />

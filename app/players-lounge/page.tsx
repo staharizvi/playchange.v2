@@ -620,6 +620,215 @@ const PlayersLounge = () => {
             </motion.div>
           )}
 
+          {/* Streamers Section */}
+          {activeTab === "streamers" && (
+            <motion.div
+              key="streamers"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="max-w-6xl mx-auto"
+            >
+              {/* Profile Building Message for New Visitors */}
+              <motion.div
+                className="bg-gradient-to-r from-orange-500/10 to-purple-500/10 border border-orange-500/30 rounded-2xl p-8 mb-12"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <div className="text-center">
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    className="w-16 h-16 mx-auto mb-4"
+                  >
+                    <Sparkles className="w-16 h-16 text-orange-500" />
+                  </motion.div>
+                  <h3 className="text-2xl font-black text-white mb-4 font-exo2">Start Your Streaming Journey!</h3>
+                  <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    Build your profile, showcase your skills, and earn from your gaming passion. Our streamers earn 
+                    up to <span className="text-orange-400 font-bold">$5,000+/month</span> through subscriptions, 
+                    donations, and exclusive tournaments.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-black font-bold px-8 py-4">
+                      <Video className="w-5 h-5 mr-2" />
+                      Start Streaming
+                    </Button>
+                    <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-8 py-4">
+                      Learn About Earnings
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Filter Options */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                {["All Streamers", "Top Earners", "New Streamers", "Live Now", "Most Followed"].map((filter, index) => (
+                  <Button
+                    key={filter}
+                    variant="outline"
+                    className="border-gray-600 text-gray-300 hover:border-orange-500 hover:text-orange-400"
+                  >
+                    {filter}
+                  </Button>
+                ))}
+              </div>
+
+              {/* Active and Popular Streamers Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {liveStreams.map((stream, index) => (
+                  <motion.div
+                    key={stream.id}
+                    className="group cursor-pointer"
+                    whileHover={{ scale: 1.03, y: -5 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Card className="bg-gray-800/50 border-gray-700 overflow-hidden group-hover:border-orange-500 transition-all duration-300 backdrop-blur-sm">
+                      {/* Streamer Profile Header */}
+                      <div className="relative p-6 bg-gradient-to-r from-gray-800/50 to-gray-900/50">
+                        <div className="flex items-center space-x-4">
+                          <div className="relative">
+                            <Image
+                              src="/placeholder.svg?height=60&width=60&text=Avatar"
+                              alt={stream.streamer}
+                              width={60}
+                              height={60}
+                              className="rounded-full border-2 border-orange-500/50"
+                            />
+                            <div className="absolute -bottom-1 -right-1">
+                              <Badge className="bg-red-500 text-white text-xs animate-pulse">
+                                LIVE
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">
+                              {stream.streamer}
+                            </h3>
+                            <div className="text-sm text-gray-400">{stream.followers} followers</div>
+                            <div className="text-sm text-orange-400">Playing {stream.game}</div>
+                          </div>
+                          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-black font-bold">
+                            <UserPlus className="w-4 h-4 mr-1" />
+                            Follow
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Current Stream Preview */}
+                      <div className="relative aspect-video">
+                        <Image
+                          src={stream.thumbnail}
+                          alt={stream.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                        
+                        {/* Stream Stats Overlay */}
+                        <div className="absolute top-3 left-3 flex space-x-2">
+                          <Badge className="bg-black/70 text-white text-xs">
+                            👁 {stream.viewers}
+                          </Badge>
+                          <Badge className="bg-black/70 text-white text-xs">
+                            ⏱ {stream.duration}
+                          </Badge>
+                        </div>
+
+                        {/* Play Button */}
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
+                          initial={false}
+                        >
+                          <Button className="bg-orange-500 hover:bg-orange-600 text-black rounded-full p-4">
+                            <Play className="w-6 h-6 fill-current" />
+                          </Button>
+                        </motion.div>
+                      </div>
+
+                      {/* Stream Info */}
+                      <div className="p-4">
+                        <h4 className="font-bold text-white mb-2 line-clamp-2 group-hover:text-orange-400 transition-colors">
+                          {stream.title}
+                        </h4>
+                        <div className="flex items-center justify-between">
+                          <div className="flex space-x-1">
+                            {stream.tags.slice(0, 2).map((tag, tagIndex) => (
+                              <Badge key={tagIndex} className="bg-orange-500/20 text-orange-400 border border-orange-500/50 text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button size="sm" variant="ghost" className="text-gray-400 hover:text-red-500 p-1">
+                              <Heart className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant="ghost" className="text-gray-400 hover:text-white p-1">
+                              <Share className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Featured Streamers of the Week */}
+              <motion.div
+                className="mt-16"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <h3 className="text-3xl font-black text-white mb-8 font-exo2 text-center">
+                  🌟 Featured Streamers This Week
+                </h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { name: "CryptoGamer_Elite", specialty: "Tournament Champion", earnings: "$8,200", badge: "Crown" },
+                    { name: "SpeedRunner_X", specialty: "World Record Holder", earnings: "$5,900", badge: "Lightning" },
+                    { name: "CommunityHub", specialty: "Community Builder", earnings: "$7,500", badge: "Heart" }
+                  ].map((streamer, index) => (
+                    <motion.div
+                      key={streamer.name}
+                      className="text-center"
+                      whileHover={{ scale: 1.05, y: -5 }}
+                    >
+                      <Card className="bg-gradient-to-br from-orange-500/20 to-purple-500/20 border-orange-500/50 p-6">
+                        <div className="relative w-20 h-20 mx-auto mb-4">
+                          <Image
+                            src="/placeholder.svg?height=80&width=80&text=Star"
+                            alt={streamer.name}
+                            width={80}
+                            height={80}
+                            className="rounded-full border-2 border-orange-500"
+                          />
+                          <motion.div
+                            className="absolute -top-2 -right-2"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                          >
+                            {streamer.badge === "Crown" && <Crown className="w-8 h-8 text-yellow-500" />}
+                            {streamer.badge === "Lightning" && <Zap className="w-8 h-8 text-blue-500" />}
+                            {streamer.badge === "Heart" && <Heart className="w-8 h-8 text-red-500" />}
+                          </motion.div>
+                        </div>
+                        <h4 className="text-lg font-bold text-white mb-2">{streamer.name}</h4>
+                        <p className="text-orange-400 mb-2">{streamer.specialty}</p>
+                        <Badge className="bg-green-500 text-black font-bold">
+                          💰 {streamer.earnings} this month
+                        </Badge>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
           {/* Forums Section */}
           {activeTab === "forums" && (
             <motion.div
