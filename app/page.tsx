@@ -242,8 +242,7 @@ const HeroBanner = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            The ultimate gaming platform where trust meets innovation. Join millions of gamers in a revolutionary
-            ecosystem built on blockchain technology.
+            The ultimate gaming platform where trust meets innovation. Join millions and have the ultimate gaming experience — where the user controls the wheel of what direction games are built out and what's released.
           </motion.p>
 
           <AnimatedStats />
@@ -1149,48 +1148,48 @@ const SubscriptionTiers = () => {
 
   const tiers = [
     {
-      name: "Free Trial",
+      name: "Free/Freemium",
       price: "Free",
-      duration: "7 Days",
-      description: "Experience PlayChange with limited access",
-      features: ["Access to 3 games", "Basic community features", "Limited NFT rewards", "Standard support"],
+      duration: "Forever",
+      description: "Profile + samples only",
+      features: ["Basic profile creation", "Game samples", "Community viewing", "Limited streaming access"],
       color: "from-gray-600 to-gray-800",
       popular: false,
     },
     {
       name: "Gamer",
-      price: "$9.99",
+      price: "$7.59",
       duration: "per month",
       description: "Perfect for casual gamers",
       features: [
         "Access to all games",
         "Full community access",
-        "NFT rewards & trading",
-        "Priority support",
-        "Monthly exclusive drops",
+        "Play Motion content with ads",
+        "Basic streaming features",
+        "Standard support",
       ],
       color: "from-orange-500 to-orange-600",
       popular: true,
     },
     {
       name: "Pro Player",
-      price: "$19.99",
+      price: "$24.59",
       duration: "per month",
       description: "For serious competitive gamers",
       features: [
         "Everything in Gamer",
+        "Ad-free Play Motion",
         "Early access to new games",
         "Exclusive tournaments",
         "Advanced analytics",
-        "Custom profile themes",
-        "VIP community access",
+        "Priority community features",
       ],
       color: "from-purple-500 to-purple-600",
       popular: false,
     },
     {
       name: "Champion",
-      price: "$39.99",
+      price: "$45.95",
       duration: "per month",
       description: "Ultimate gaming experience",
       features: [
@@ -1200,7 +1199,7 @@ const SubscriptionTiers = () => {
         "Exclusive NFT collections",
         "Personal gaming coach",
         "Revenue sharing program",
-        "Custom game requests",
+        "Custom content requests",
       ],
       color: "from-yellow-500 to-yellow-600",
       popular: false,
@@ -2123,7 +2122,7 @@ const PlatformOverview = () => {
           <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-gray-700 p-12 backdrop-blur-sm">
             <h3 className="text-4xl font-black text-white mb-4 font-exo2">Ready to Start Gaming?</h3>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of players in the ultimate gaming experience. Play, earn, and connect in our revolutionary platform.
+              Join thousands of players in the ultimate gaming experience. Play, earn, and connect!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/games">
@@ -2159,6 +2158,137 @@ export default function HomePage() {
       <div className="pt-24">
         <HeroBanner />
         <PlatformOverview />
+        
+        {/* Membership Comparison Section */}
+        <section className="py-20 px-6 bg-gradient-to-b from-gray-900/20 to-black relative">
+          <div className="container mx-auto">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-5xl font-black text-white mb-6 font-exo2">
+                Free vs Premium Experience
+              </h2>
+              <p className="text-xl text-orange-400 font-orbitron">
+                Choose the plan that fits your gaming style
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {/* Free Plan */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-gray-800/30 border-gray-600 p-8 h-full">
+                  <div className="text-center mb-8">
+                    <Badge className="bg-gray-600 text-white mb-4">FREE</Badge>
+                    <h3 className="text-3xl font-black text-white mb-2 font-exo2">Basic Experience</h3>
+                    <p className="text-gray-400">Perfect for trying out PlayChange</p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-gray-300">Basic profile creation</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-gray-300">Game samples and demos</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-gray-300">Community viewing access</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-gray-300">Play Motion with ads</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-gray-300">Limited streaming access</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-gray-600 text-center">
+                    <div className="text-3xl font-black text-white mb-2">$0</div>
+                    <div className="text-gray-400 mb-6">Forever free</div>
+                    <Link href="/games">
+                      <Button variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-700">
+                        Start Free
+                      </Button>
+                    </Link>
+                  </div>
+                </Card>
+              </motion.div>
+
+              {/* Premium Plan */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-gradient-to-br from-orange-500/10 to-yellow-500/10 border-orange-500 p-8 h-full relative overflow-hidden">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  />
+                  
+                  <div className="text-center mb-8 relative z-10">
+                    <Badge className="bg-orange-500 text-black mb-4">PREMIUM</Badge>
+                    <h3 className="text-3xl font-black text-white mb-2 font-exo2">Full Experience</h3>
+                    <p className="text-orange-400">Everything you need to dominate</p>
+                  </div>
+                  
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white font-medium">Everything in Free +</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Access to ALL games</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Ad-free Play Motion streaming</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Full community features</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Exclusive tournaments & events</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Priority support</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-white">Early access to new content</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-orange-500/30 text-center relative z-10">
+                    <div className="text-3xl font-black text-orange-500 mb-2">$7.59</div>
+                    <div className="text-orange-400 mb-6">per month</div>
+                    <Link href="/store">
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600 text-black font-bold">
+                        Upgrade Now
+                      </Button>
+                    </Link>
+                  </div>
+                </Card>
+              </motion.div>
+            </div>
+          </div>
+        </section>
         
         {/* Platform Integration Showcase */}
         <section className="py-16 px-6">

@@ -51,7 +51,7 @@ import Footer from "@/components/shared/Footer"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
 
 const PlayersLounge = () => {
-  const [activeTab, setActiveTab] = useState("live-streams")
+  const [activeTab, setActiveTab] = useState("streaming-now")
   const [selectedStream, setSelectedStream] = useState(0)
   const [chatMessage, setChatMessage] = useState("")
   const [isStreamMuted, setIsStreamMuted] = useState(false)
@@ -347,7 +347,7 @@ const PlayersLounge = () => {
         {/* Enhanced Navigation */}
         <div className="flex justify-center mb-12">
           <div className="bg-gray-800/50 rounded-2xl p-2 backdrop-blur-sm border border-gray-700">
-            {["live-streams", "forums", "tournaments", "leaderboard", "clips"].map((tab) => (
+            {["streaming-now", "streamers", "forums", "tournaments", "leaderboard", "clips"].map((tab) => (
               <motion.button
                 key={tab}
                 className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
@@ -365,10 +365,10 @@ const PlayersLounge = () => {
 
         {/* Content Sections */}
         <AnimatePresence mode="wait">
-          {/* Live Streams Section */}
-          {activeTab === "live-streams" && (
+          {/* Streaming Now Section */}
+          {activeTab === "streaming-now" && (
             <motion.div
-              key="live-streams"
+              key="streaming-now"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}

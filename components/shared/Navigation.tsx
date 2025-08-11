@@ -31,8 +31,8 @@ const Navigation = () => {
   const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Games", href: "/games", icon: Gamepad2 },
+    { name: "Play Motion", href: "/play-motion", icon: Sparkles },
     { name: "Players Lounge", href: "/players-lounge", icon: Users },
-    { name: "NFT Marketplace", href: "/nft-marketplace", icon: Sparkles },
     { name: "Store", href: "/store", icon: Store },
     { name: "Trophy Room", href: "/trophy-room", icon: Trophy },
     { name: "Support", href: "/support", icon: HelpCircle }
