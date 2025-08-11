@@ -215,8 +215,8 @@ const Navigation = () => {
                 />
               </motion.div>
 
-              {/* Sign In Button */}
-              <Link href="/auth">
+              {/* Play Now Button */}
+              <Link href="/">
                 <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -231,7 +231,7 @@ const Navigation = () => {
                     />
                     <span className="relative z-10 flex items-center space-x-2">
                       <Zap className="w-4 h-4" />
-                      <span>SIGN IN</span>
+                      <span>PLAY NOW</span>
                     </span>
                   </Button>
                 </motion.div>
@@ -317,7 +317,7 @@ const Navigation = () => {
                 </div>
                 
                 <div className="mt-6 pt-6 border-t border-gray-700">
-                  <Link href="/auth">
+                  <Link href="/">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -325,7 +325,7 @@ const Navigation = () => {
                     >
                       <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-red-500 text-black font-black py-4 rounded-xl font-exo2">
                         <Zap className="w-4 h-4 mr-2" />
-                        SIGN IN
+                        PLAY NOW
                       </Button>
                     </motion.div>
                   </Link>

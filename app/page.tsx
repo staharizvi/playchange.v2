@@ -255,7 +255,7 @@ const HeroBanner = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.8 }}
           >
-            <Link href="/auth">
+            <Link href="/games">
               <motion.div
                 whileHover={{
                   scale: 1.05,
@@ -2126,7 +2126,7 @@ const PlatformOverview = () => {
               Join thousands of players in the ultimate gaming experience. Play, earn, and connect in our revolutionary platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/auth">
+              <Link href="/games">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button className="bg-orange-500 hover:bg-orange-600 text-black font-bold px-8 py-4 text-lg rounded-full">
                     <Play className="mr-2 w-5 h-5" />
@@ -2134,11 +2134,11 @@ const PlatformOverview = () => {
                   </Button>
                 </motion.div>
               </Link>
-              <Link href="/games">
+              <Link href="/players-lounge">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-8 py-4 text-lg rounded-full">
-                    <Eye className="mr-2 w-5 h-5" />
-                    Explore Games
+                    <Users className="mr-2 w-5 h-5" />
+                    Join Community
                   </Button>
                 </motion.div>
               </Link>
