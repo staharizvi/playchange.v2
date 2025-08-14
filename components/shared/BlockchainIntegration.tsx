@@ -38,13 +38,13 @@ import Image from "next/image"
 interface WalletConnection {
   address: string
   balance: {
-    eth: string
+    sol: string
     usdc: string
     tokens: string
   }
   network: string
   isConnected: boolean
-  walletType: 'metamask' | 'coinbase' | 'walletconnect' | null
+  walletType: 'phantom' | 'solflare' | 'metamask' | 'coinbase' | null
 }
 
 interface NFTMetadata {
@@ -82,12 +82,12 @@ interface BlockchainIntegrationProps {
 
 const BlockchainIntegration = ({
   autoConnect = true,
-  supportedNetworks = ['mainnet', 'polygon', 'arbitrum'],
-  defaultNetwork = 'mainnet'
+  supportedNetworks = ['solana-mainnet', 'solana-devnet', 'ethereum'],
+  defaultNetwork = 'solana-mainnet'
 }: BlockchainIntegrationProps) => {
   const [wallet, setWallet] = useState<WalletConnection>({
     address: '',
-    balance: { eth: '0', usdc: '0', tokens: '0' },
+    balance: { sol: '0', usdc: '0', tokens: '0' },
     network: defaultNetwork,
     isConnected: false,
     walletType: null
@@ -104,10 +104,10 @@ const BlockchainIntegration = ({
     networkLoad: 75
   })
 
-  // Mock wallet addresses for demo
+  // Mock wallet addresses for demo (Solana format)
   const mockWallet = {
-    address: "0x742d35Cc6644C008532e8aB8B8Db71C7Ac6c8F21",
-    balance: { eth: "5.247", usdc: "12,450.00", tokens: "8,750" }
+    address: "7rQ1Qw8K2Vt4ZQ9g5Hc3N6oL4pP2sF8jD1mK9B7sT6xE",
+    balance: { sol: "125.847", usdc: "12,450.00", tokens: "8,750" }
   }
 
   // Mock transactions for demo
@@ -166,7 +166,7 @@ const BlockchainIntegration = ({
     setTransactions(mockTransactions)
   }, [autoConnect, defaultNetwork])
 
-  const connectWallet = async (walletType: 'metamask' | 'coinbase' | 'walletconnect') => {
+  const connectWallet = async (walletType: 'phantom' | 'solflare' | 'metamask' | 'coinbase') => {
     setIsConnecting(true)
     
     try {
@@ -198,7 +198,7 @@ const BlockchainIntegration = ({
   const disconnectWallet = () => {
     setWallet({
       address: '',
-      balance: { eth: '0', usdc: '0', tokens: '0' },
+      balance: { sol: '0', usdc: '0', tokens: '0' },
       network: defaultNetwork,
       isConnected: false,
       walletType: null
@@ -301,9 +301,9 @@ const BlockchainIntegration = ({
             
             <div className="grid md:grid-cols-3 gap-4">
               {[
-                { type: 'metamask' as const, name: 'MetaMask', logo: '🦊', popular: true },
-                { type: 'coinbase' as const, name: 'Coinbase Wallet', logo: '🔵', popular: false },
-                { type: 'walletconnect' as const, name: 'WalletConnect', logo: '🔗', popular: false }
+                { type: 'phantom' as const, name: 'Phantom', logo: '👻', popular: true },
+                { type: 'solflare' as const, name: 'Solflare', logo: '☀️', popular: true },
+                { type: 'metamask' as const, name: 'MetaMask', logo: '🦊', popular: false }
               ].map((walletOption) => (
                 <motion.button
                   key={walletOption.type}
@@ -370,7 +370,7 @@ const BlockchainIntegration = ({
             {/* Balance Overview */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { symbol: 'ETH', amount: wallet.balance.eth, icon: '⟠', color: 'text-blue-400' },
+                { symbol: 'SOL', amount: wallet.balance.sol, icon: '☀️', color: 'text-purple-400' },
                 { symbol: 'USDC', amount: wallet.balance.usdc, icon: '●', color: 'text-green-400' },
                 { symbol: 'PLAY', amount: wallet.balance.tokens, icon: '🎮', color: 'text-orange-400' }
               ].map((asset) => (

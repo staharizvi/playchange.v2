@@ -31,6 +31,7 @@ import Image from "next/image"
 import Navigation from "@/components/shared/Navigation"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
 import Footer from "@/components/shared/Footer"
+import UpgradePrompt from "@/components/shared/UpgradePrompt"
 
 // Featured Content Carousel
 const FeaturedCarousel = () => {
@@ -522,6 +523,19 @@ export default function PlayMotionPage() {
       <Navigation />
       <div className="pt-24">
         <FeaturedCarousel />
+        
+        {/* Upgrade Prompt for Ad-Free Streaming */}
+        <section className="py-8 px-6">
+          <div className="container mx-auto max-w-4xl">
+            <UpgradePrompt
+              variant="banner"
+              feature="Ad-Free Streaming"
+              description="Enjoy uninterrupted Play Motion content without advertisements"
+              recommendedPlan="pro"
+            />
+          </div>
+        </section>
+        
         <ContentGrid />
         <MembershipPromotion />
       </div>

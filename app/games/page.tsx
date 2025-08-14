@@ -20,6 +20,7 @@ import Link from "next/link"
 import Navigation from "@/components/shared/Navigation"
 import Footer from "@/components/shared/Footer"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
+import UpgradePrompt from "@/components/shared/UpgradePrompt"
 
 // TrendingGames Component
 const TrendingGames = () => {
@@ -100,16 +101,16 @@ const TrendingGames = () => {
   ]
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-black to-gray-900 relative">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 bg-gradient-to-b from-black to-gray-900 relative">
       <div className="container mx-auto">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
           <motion.h2
-            className="text-6xl md:text-7xl font-black mb-4 font-exo2"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 font-exo2"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -129,7 +130,7 @@ const TrendingGames = () => {
             GAMES PEOPLE ARE PLAYING
           </motion.h2>
           <motion.p
-            className="text-xl text-orange-400 font-orbitron font-bold"
+            className="text-base sm:text-lg md:text-xl text-orange-400 font-orbitron font-bold"
             animate={{
               textShadow: [
                 "0 0 10px rgba(255, 111, 0, 0.5)",
@@ -146,7 +147,7 @@ const TrendingGames = () => {
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 max-w-6xl mx-auto">
           {trendingGames.map((game, index) => (
             <motion.div
               key={index}
@@ -508,6 +509,19 @@ export default function GamesPage() {
       <Navigation />
       <div className="pt-24">
         <TrendingGames />
+        
+        {/* Upgrade Prompt for Free Users */}
+        <section className="py-8 px-6">
+          <div className="container mx-auto max-w-4xl">
+            <UpgradePrompt
+              variant="banner"
+              feature="Full Game Library Access"
+              description="Unlock unlimited access to our complete collection of premium games"
+              recommendedPlan="gamer"
+            />
+          </div>
+        </section>
+        
         <EnhancedGameCategories />
       </div>
       <Footer />

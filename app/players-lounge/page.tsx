@@ -48,6 +48,7 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Navigation from "@/components/shared/Navigation"
 import Footer from "@/components/shared/Footer"
+import UpgradePrompt from "@/components/shared/UpgradePrompt"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
 
 const PlayersLounge = () => {
@@ -347,7 +348,7 @@ const PlayersLounge = () => {
         {/* Enhanced Navigation */}
         <div className="flex justify-center mb-12">
           <div className="bg-gray-800/50 rounded-2xl p-2 backdrop-blur-sm border border-gray-700">
-            {["streaming-now", "streamers", "forums", "tournaments", "leaderboard", "clips"].map((tab) => (
+            {["streaming-now", "play-players", "forums", "tournaments", "leaderboard", "clips"].map((tab) => (
               <motion.button
                 key={tab}
                 className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
@@ -357,7 +358,7 @@ const PlayersLounge = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
+                {tab === "play-players" ? "Play Players" : tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
               </motion.button>
             ))}
           </div>
@@ -521,12 +522,12 @@ const PlayersLounge = () => {
                   </div>
                 </div>
 
-                {/* Live Chat */}
+                {/* Individual Stream Chat */}
                 <div className="lg:col-span-1">
                   <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm h-full">
                     <div className="p-4 border-b border-gray-700">
                       <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-white">Stream Chat</h3>
+                        <h3 className="font-bold text-white">{liveStreams[selectedStream].streamer}'s Chat</h3>
                         <div className="flex items-center space-x-2">
                           <Badge className="bg-green-500 text-white text-xs">
                             🟢 {Math.floor(Math.random() * 500) + 100} chatting
@@ -620,10 +621,10 @@ const PlayersLounge = () => {
             </motion.div>
           )}
 
-          {/* Streamers Section */}
-          {activeTab === "streamers" && (
+          {/* Play Players Section */}
+          {activeTab === "play-players" && (
             <motion.div
-              key="streamers"
+              key="play-players"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
@@ -899,6 +900,16 @@ const PlayersLounge = () => {
               exit={{ opacity: 0, y: -50 }}
               className="max-w-6xl mx-auto"
             >
+              {/* Upgrade Prompt for Tournament Access */}
+              <div className="mb-8">
+                <UpgradePrompt
+                  variant="banner"
+                  feature="Priority Tournament Access"
+                  description="Get priority registration and exclusive access to premium tournaments"
+                  recommendedPlan="pro"
+                />
+              </div>
+              
               <div className="space-y-6">
                 {upcomingTournaments.map((tournament, index) => (
                   <motion.div

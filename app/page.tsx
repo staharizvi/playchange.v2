@@ -85,7 +85,7 @@ const AnimatedStats = () => {
   ]
 
   return (
-    <div className="grid grid-cols-3 gap-8 mb-12">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
       {stats.map((stat, index) => (
         <motion.div
           key={index}
@@ -105,7 +105,7 @@ const AnimatedStats = () => {
           }}
         >
           <motion.div
-            className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-orange-500/20 border-2 border-orange-500/50"
+            className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full flex items-center justify-center bg-orange-500/20 border-2 border-orange-500/50"
             whileHover={{
               boxShadow: "0 0 30px rgba(255, 111, 0, 0.6)",
               borderColor: "rgba(255, 111, 0, 0.8)",
@@ -157,7 +157,7 @@ const AnimatedStats = () => {
 // Hero Banner with original background
 const HeroBanner = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6">
+    <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6">
       <div className="container mx-auto text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 100, scale: 0.8 }}
@@ -165,7 +165,7 @@ const HeroBanner = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <motion.h1
-            className="text-6xl md:text-8xl font-black mb-6 font-exo2 text-white"
+            className="text-4xl sm:text-6xl md:text-8xl font-black mb-4 sm:mb-6 font-exo2 text-white"
             animate={{
               textShadow: [
                 "0 0 20px rgba(255, 255, 255, 0.5)",
@@ -202,7 +202,7 @@ const HeroBanner = () => {
           </motion.h1>
 
           <motion.div
-            className="text-2xl md:text-3xl mb-4 font-orbitron font-bold"
+            className="text-lg sm:text-2xl md:text-3xl mb-3 sm:mb-4 font-orbitron font-bold"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -238,7 +238,7 @@ const HeroBanner = () => {
           </motion.div>
 
           <motion.p
-            className="text-xl md:text-2xl mb-12 text-gray-300 max-w-4xl mx-auto font-exo2"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 sm:mb-12 text-gray-300 max-w-4xl mx-auto font-exo2 px-4"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
@@ -250,7 +250,7 @@ const HeroBanner = () => {
 
           {/* Enhanced buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-8 sm:mb-12 px-4"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.8 }}
@@ -273,7 +273,7 @@ const HeroBanner = () => {
                   boxShadow: { duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
                 }}
               >
-                <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-black font-bold px-12 py-6 text-xl rounded-full shadow-2xl font-exo2 relative overflow-hidden group">
+                <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-black font-bold px-6 sm:px-8 md:px-12 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl rounded-full shadow-2xl font-exo2 relative overflow-hidden group w-full sm:w-auto">
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full"
                     transition={{ duration: 0.8 }}
@@ -284,7 +284,7 @@ const HeroBanner = () => {
                       animate={{ x: [0, 5, 0] }}
                       transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
                     >
-                      <ArrowRight className="ml-3 w-6 h-6" />
+                      <ArrowRight className="ml-2 sm:ml-3 w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                     </motion.div>
                   </span>
                 </Button>
@@ -294,7 +294,7 @@ const HeroBanner = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-12 py-6 text-xl bg-transparent rounded-full font-exo2 relative overflow-hidden group"
+                className="border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-6 sm:px-8 md:px-12 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl bg-transparent rounded-full font-exo2 relative overflow-hidden group w-full sm:w-auto"
               >
                 <motion.div
                   className="absolute inset-0 bg-orange-500/20 scale-x-0 group-hover:scale-x-100 origin-left"
@@ -305,7 +305,7 @@ const HeroBanner = () => {
                     animate={{ rotate: [0, 360] }}
                     transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                   >
-                    <Play className="mr-3 w-6 h-6" />
+                    <Play className="mr-2 sm:mr-3 w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   </motion.div>
                   WATCH TRAILER
                 </span>
@@ -1152,10 +1152,18 @@ const SubscriptionTiers = () => {
       name: "Free/Freemium",
       price: "Free",
       duration: "Forever",
-      description: "Profile + samples only",
-      features: ["Basic profile creation", "Game samples", "Community viewing", "Limited streaming access"],
+      description: "Profile + record tracking + limited premium content samples",
+      features: [
+        "Basic profile creation & customization",
+        "Game performance tracking & records", 
+        "Limited premium content samples",
+        "Community viewing access",
+        "Basic Play Motion (with ads)"
+      ],
       color: "from-gray-600 to-gray-800",
       popular: false,
+      badge: "Get Started",
+      highlight: false
     },
     {
       name: "Gamer",
@@ -1163,47 +1171,57 @@ const SubscriptionTiers = () => {
       duration: "per month",
       description: "Perfect for casual gamers",
       features: [
-        "Access to all games",
-        "Full community access",
-        "Play Motion content with ads",
-        "Basic streaming features",
-        "Standard support",
+        "Everything in Free +",
+        "Full game library access",
+        "Enhanced record tracking",
+        "Community participation", 
+        "Play Motion streaming (with ads)",
+        "Basic tournament entry",
+        "Standard support"
       ],
       color: "from-orange-500 to-orange-600",
       popular: true,
+      badge: "Most Popular",
+      highlight: true
     },
     {
-      name: "Pro Player",
+      name: "Pro Player", 
       price: "$24.59",
       duration: "per month",
       description: "For serious competitive gamers",
       features: [
-        "Everything in Gamer",
-        "Ad-free Play Motion",
-        "Early access to new games",
-        "Exclusive tournaments",
-        "Advanced analytics",
-        "Priority community features",
+        "Everything in Gamer +",
+        "Ad-free Play Motion streaming",
+        "Priority tournament access",
+        "Advanced performance analytics",
+        "Exclusive community features",
+        "Early access to new content",
+        "Priority customer support"
       ],
       color: "from-purple-500 to-purple-600",
       popular: false,
+      badge: "Pro Level",
+      highlight: false
     },
     {
       name: "Champion",
-      price: "$45.95",
+      price: "$45.95", 
       duration: "per month",
       description: "Ultimate gaming experience",
       features: [
-        "Everything in Pro Player",
-        "Beta testing access",
-        "Direct developer contact",
+        "Everything in Pro Player +",
+        "Beta testing privileges",
+        "Direct developer communication",
         "Exclusive NFT collections",
-        "Personal gaming coach",
-        "Revenue sharing program",
+        "Personal gaming coach access",
+        "Revenue sharing opportunities",
         "Custom content requests",
+        "VIP event invitations"
       ],
-      color: "from-yellow-500 to-yellow-600",
+      color: "from-yellow-500 to-yellow-600", 
       popular: false,
+      badge: "Elite",
+      highlight: false
     },
   ]
 
@@ -1277,33 +1295,39 @@ const SubscriptionTiers = () => {
           {tiers.map((tier, index) => (
             <motion.div
               key={index}
-              className={`relative cursor-pointer ${tier.popular ? "scale-105" : ""}`}
+              className={`relative cursor-pointer ${tier.highlight ? "scale-105" : ""}`}
               onClick={() => setSelectedTier(index)}
-              whileHover={{ scale: tier.popular ? 1.08 : 1.05, y: -10 }}
+              whileHover={{ scale: tier.highlight ? 1.08 : 1.05, y: -10 }}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              {/* Popular Badge */}
-              {tier.popular && (
-                <motion.div
-                  className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-black px-6 py-2 rounded-full font-bold text-sm z-10"
-                  animate={{
-                    boxShadow: [
-                      "0 0 10px rgba(255, 111, 0, 0.5)",
-                      "0 0 20px rgba(255, 111, 0, 0.8)",
-                      "0 0 10px rgba(255, 111, 0, 0.5)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Number.POSITIVE_INFINITY,
-                  }}
-                >
-                  MOST POPULAR
-                </motion.div>
-              )}
+              {/* Tier Badge */}
+              <motion.div
+                className={`absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full font-bold text-sm z-10 ${
+                  tier.highlight 
+                    ? "bg-orange-500 text-black" 
+                    : tier.name === "Champion"
+                      ? "bg-yellow-500 text-black"
+                      : tier.name === "Pro Player"
+                        ? "bg-purple-500 text-white"
+                        : "bg-gray-600 text-white"
+                }`}
+                animate={tier.highlight ? {
+                  boxShadow: [
+                    "0 0 10px rgba(255, 111, 0, 0.5)",
+                    "0 0 20px rgba(255, 111, 0, 0.8)",
+                    "0 0 10px rgba(255, 111, 0, 0.5)",
+                  ],
+                } : {}}
+                transition={{
+                  duration: 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                }}
+              >
+                {tier.badge}
+              </motion.div>
 
               <Card
                 className={`bg-gray-800/50 border-2 ${
@@ -1339,12 +1363,18 @@ const SubscriptionTiers = () => {
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
                       className={`w-full ${
-                        tier.popular
+                        tier.highlight
                           ? "bg-orange-500 hover:bg-orange-600 text-black"
-                          : "bg-gray-700 hover:bg-gray-600 text-white"
+                          : tier.name === "Champion"
+                            ? "bg-yellow-500 hover:bg-yellow-600 text-black"
+                            : tier.name === "Pro Player"
+                              ? "bg-purple-500 hover:bg-purple-600 text-white"
+                              : "bg-gray-700 hover:bg-gray-600 text-white"
                       } font-bold py-3 text-lg rounded-full transition-all duration-300`}
                     >
-                      {index === 0 ? "START FREE TRIAL" : "CHOOSE PLAN"}
+                      {tier.name === "Free/Freemium" ? "GET STARTED FREE" : 
+                       tier.name === "Champion" ? "GO CHAMPION" :
+                       "UPGRADE NOW"}
                     </Button>
                   </motion.div>
                 </div>
@@ -2121,7 +2151,7 @@ const PlatformOverview = () => {
           viewport={{ once: true }}
         >
           <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-gray-700 p-12 backdrop-blur-sm">
-            <h3 className="text-4xl font-black text-white mb-4 font-exo2">Ready to Start Gaming?</h3>
+            <h3 className="text-4xl font-black text-white mb-4 font-exo2">Feeling Charged Up?</h3>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               Join thousands of players in the ultimate gaming experience. Play, earn, and connect!
             </p>

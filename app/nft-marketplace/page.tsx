@@ -24,8 +24,6 @@ import {
   DollarSign,
   ArrowUpRight,
   ArrowDownRight,
-  Timer,
-  Gavel,
   Plus,
   Upload,
   Image as ImageIcon,
@@ -65,6 +63,7 @@ import Image from "next/image"
 import Navigation from "@/components/shared/Navigation"
 import Footer from "@/components/shared/Footer"
 import EnhancedBackground from "@/components/shared/EnhancedBackground"
+import UpgradePrompt from "@/components/shared/UpgradePrompt"
 import SocialSharing from "@/components/shared/SocialSharing"
 import SponsorSlot from "@/components/shared/SponsorSlot"
 import AIVirtualAssistant from "@/components/shared/AIVirtualAssistant"
@@ -82,12 +81,13 @@ const NFTMarketplace = () => {
   const [selectedNFT, setSelectedNFT] = useState(null)
   const [showWallet, setShowWallet] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false)
 
   const marketplaceStats = [
-    { label: "Total Volume", value: "2.4M USDC", icon: DollarSign, change: "+12.5%", color: "text-green-500" },
+    { label: "Total Volume", value: "2.4M SOL", icon: DollarSign, change: "+12.5%", color: "text-green-500" },
     { label: "Active Listings", value: "15.7K", icon: Tag, change: "+8.2%", color: "text-blue-500" },
-    { label: "Floor Price", value: "0.05 ETH", icon: TrendingUp, change: "-3.1%", color: "text-red-500" },
-    { label: "Total Sales", value: "89.2K", icon: Activity, change: "+15.8%", color: "text-orange-500" },
+    { label: "Floor Price", value: "0.05 SOL", icon: TrendingUp, change: "-3.1%", color: "text-red-500" },
+    { label: "Instant Sales", value: "89.2K", icon: Activity, change: "+15.8%", color: "text-orange-500" },
   ]
 
   const nftListings = [
@@ -98,9 +98,9 @@ const NFTMarketplace = () => {
       creator: "ProGamer_Elite",
       owner: "NFTCollector_99",
       game: "CryptoBoxers",
-      price: "2.5",
-      currency: "ETH",
-      usdPrice: "4,250",
+      price: "12.5",
+      currency: "SOL",
+      usdPrice: "1,250",
       thumbnail: "/placeholder.svg?height=300&width=300&text=NFT+1",
       videoUrl: "/placeholder.mp4",
       rarity: "Legendary",
@@ -113,7 +113,7 @@ const NFTMarketplace = () => {
       stats: { power: 95, rarity: 98, popularity: 89 },
       listingType: "fixed",
       timeLeft: null,
-      lastSale: "2.2 ETH",
+      lastSale: "11.8 SOL",
       priceHistory: [1.8, 2.1, 2.5, 2.3, 2.5],
       created: "2024-01-15",
       listed: "2024-01-20"
@@ -125,9 +125,9 @@ const NFTMarketplace = () => {
       creator: "SpeedRunner_X",
       owner: "GameCollector",
       game: "Token Quest",
-      price: "1.8",
-      currency: "ETH",
-      usdPrice: "3,060",
+      price: "9.2",
+      currency: "SOL", 
+      usdPrice: "920",
       thumbnail: "/placeholder.svg?height=300&width=300&text=NFT+2",
       videoUrl: "/placeholder.mp4",
       rarity: "Epic",
@@ -138,8 +138,8 @@ const NFTMarketplace = () => {
       category: "Speedrun",
       tags: ["World Record", "Speedrun", "Skill"],
       stats: { power: 88, rarity: 85, popularity: 92 },
-      listingType: "auction",
-      timeLeft: "2d 14h 32m",
+      listingType: "fixed",
+      timeLeft: null,
       lastSale: "1.5 ETH",
       priceHistory: [1.2, 1.5, 1.6, 1.8],
       created: "2024-01-10",
@@ -192,8 +192,8 @@ const NFTMarketplace = () => {
       category: "Community",
       tags: ["Community", "Tournament", "Social"],
       stats: { power: 65, rarity: 45, popularity: 78 },
-      listingType: "auction",
-      timeLeft: "1d 8h 15m",
+      listingType: "fixed",
+      timeLeft: null,
       lastSale: "0.5 ETH",
       priceHistory: [0.4, 0.5, 0.55, 0.65],
       created: "2024-01-14",
@@ -246,8 +246,8 @@ const NFTMarketplace = () => {
       category: "Retro",
       tags: ["Perfect", "Retro", "Arcade"],
       stats: { power: 82, rarity: 75, popularity: 86 },
-      listingType: "auction",
-      timeLeft: "3d 5h 42m",
+      listingType: "fixed",
+      timeLeft: null,
       lastSale: "0.6 ETH",
       priceHistory: [0.5, 0.6, 0.7, 0.75],
       created: "2024-01-11",
@@ -270,7 +270,7 @@ const NFTMarketplace = () => {
     { type: "purchase", nft: "Epic CryptoBoxers Knockout", price: "2.5 ETH", date: "2024-01-22", status: "completed" },
     { type: "sale", nft: "Speedrun Record Clip", price: "1.8 ETH", date: "2024-01-21", status: "completed" },
     { type: "listing", nft: "Trophy Unlock Moment", price: "0.95 ETH", date: "2024-01-20", status: "active" },
-    { type: "bid", nft: "Community Event Highlight", price: "0.65 ETH", date: "2024-01-19", status: "pending" }
+    { type: "purchase", nft: "Community Event Highlight", price: "3.2 SOL", date: "2024-01-19", status: "completed" }
   ]
 
   const categories = [
@@ -283,6 +283,22 @@ const NFTMarketplace = () => {
     { id: "retro", name: "Retro Games", count: 180 },
     { id: "tournament", name: "Tournaments", count: 160 }
   ]
+
+  const handlePurchase = (nft: any) => {
+    setSelectedNFT(nft)
+    setShowPurchaseModal(true)
+  }
+
+  const handlePaymentComplete = (method: string, transactionId: string) => {
+    console.log(`✅ Solana Payment completed: ${method} - Transaction: ${transactionId}`)
+    
+    // Simulate Solana transaction confirmation
+    setTimeout(() => {
+      alert(`🎉 NFT Purchase Successful!\n\nPayment Method: ${method}\nTransaction ID: ${transactionId}\n\nYour NFT "${selectedNFT?.title}" has been transferred to your wallet on Solana blockchain. Ultra-low fees of ~$0.001!`)
+      setShowPurchaseModal(false)
+      setSelectedNFT(null)
+    }, 1000)
+  }
 
   const filteredNFTs = nftListings.filter(nft => {
     const matchesCategory = filterCategory === "all" || nft.category.toLowerCase() === filterCategory
@@ -395,6 +411,16 @@ const NFTMarketplace = () => {
           />
         </div>
 
+        {/* Upgrade Prompt for Premium NFT Features */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <UpgradePrompt
+            variant="banner"
+            feature="Premium NFT Trading"
+            description="Get access to exclusive NFT drops, custom content requests, and revenue sharing"
+            recommendedPlan="champion"
+          />
+        </div>
+
         {/* Marketplace Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {marketplaceStats.map((stat, index) => (
@@ -467,65 +493,119 @@ const NFTMarketplace = () => {
               <div className="flex gap-8">
                 {/* Main Content */}
                 <div className="flex-1">
-              {/* Search and Filters */}
-              <div className="flex flex-col lg:flex-row gap-6 mb-8">
-                <div className="flex-1">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              {/* Enhanced Search and Filters */}
+              <motion.div 
+                className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-gray-700/50"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                {/* Search Bar */}
+                <div className="mb-6">
+                  <div className="relative max-w-2xl">
+                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-orange-500 w-5 h-5" />
                     <input
                       type="text"
                       placeholder="Search NFTs, creators, games..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none backdrop-blur-sm"
+                      className="w-full bg-gray-900/50 border border-gray-600 rounded-xl pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none backdrop-blur-sm text-lg"
                     />
+                    {searchQuery && (
+                      <button
+                        onClick={() => setSearchQuery("")}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Filters Row */}
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                  {/* Category Pills */}
+                  <div className="flex flex-wrap gap-3">
+                    <div className="text-sm font-medium text-gray-400 mr-3 flex items-center">
+                      <Filter className="w-4 h-4 mr-2" />
+                      Categories:
+                    </div>
+                    {categories.slice(0, 6).map((category) => (
+                      <motion.button
+                        key={category.id}
+                        onClick={() => setFilterCategory(category.id)}
+                        className={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 flex items-center space-x-2 ${
+                          filterCategory === category.id
+                            ? "bg-gradient-to-r from-orange-500 to-orange-600 text-black shadow-lg shadow-orange-500/25"
+                            : "bg-gray-700/50 text-gray-300 hover:bg-gray-600 hover:text-orange-400 border border-gray-600"
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span>{category.name}</span>
+                        <Badge className="bg-black/20 text-xs px-1">
+                          {category.count}
+                        </Badge>
+                      </motion.button>
+                    ))}
+                  </div>
+                  
+                  {/* Sort and View Controls */}
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-gray-400">Sort:</span>
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-2 text-white focus:border-orange-500 focus:outline-none backdrop-blur-sm min-w-[180px]"
+                      >
+                        <option value="newest">🕒 Newest First</option>
+                        <option value="oldest">📅 Oldest First</option>
+                        <option value="price-high">💰 Highest Price</option>
+                        <option value="price-low">💸 Lowest Price</option>
+                        <option value="popular">🔥 Most Popular</option>
+                        <option value="recently-listed">📅 Recently Listed</option>
+                      </select>
+                    </div>
+                    
+                    <div className="flex bg-gray-700/50 border border-gray-600 rounded-xl backdrop-blur-sm">
+                      <motion.button
+                        onClick={() => setViewMode("grid")}
+                        className={`p-3 rounded-l-xl transition-colors ${viewMode === "grid" ? "text-orange-500 bg-orange-500/10" : "text-gray-400 hover:text-orange-400"}`}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Grid3X3 className="w-5 h-5" />
+                      </motion.button>
+                      <motion.button
+                        onClick={() => setViewMode("list")}
+                        className={`p-3 rounded-r-xl transition-colors ${viewMode === "list" ? "text-orange-500 bg-orange-500/10" : "text-gray-400 hover:text-orange-400"}`}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <List className="w-5 h-5" />
+                      </motion.button>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="flex gap-4">
-                  <select
-                    value={filterCategory}
-                    onChange={(e) => setFilterCategory(e.target.value)}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-orange-500 focus:outline-none backdrop-blur-sm"
-                  >
-                    {categories.map(category => (
-                      <option key={category.id} value={category.id}>
-                        {category.name} ({category.count})
-                      </option>
-                    ))}
-                  </select>
-                  
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-orange-500 focus:outline-none backdrop-blur-sm"
-                  >
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="popular">Most Popular</option>
-                  </select>
-                  
-                  <div className="flex bg-gray-800/50 border border-gray-700 rounded-xl backdrop-blur-sm">
-                    <button
-                      onClick={() => setViewMode("grid")}
-                      className={`p-3 ${viewMode === "grid" ? "text-orange-500" : "text-gray-400"}`}
-                    >
-                      <Grid3X3 className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => setViewMode("list")}
-                      className={`p-3 ${viewMode === "list" ? "text-orange-500" : "text-gray-400"}`}
-                    >
-                      <List className="w-5 h-5" />
-                    </button>
+                {/* Quick Stats */}
+                <div className="mt-6 pt-4 border-t border-gray-700/50 flex items-center justify-between text-sm">
+                  <div className="text-gray-400">
+                    Showing <span className="text-orange-400 font-bold">{filteredNFTs.length}</span> of <span className="text-white font-bold">{nftListings.length}</span> NFTs
+                  </div>
+                  <div className="flex items-center space-x-6 text-gray-400">
+                    <div className="flex items-center space-x-2">
+                      <Gem className="w-4 h-4 text-purple-400" />
+                      <span>Floor: <span className="text-purple-400 font-bold">{marketplaceStats[2].value}</span></span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <BarChart3 className="w-4 h-4 text-green-400" />
+                      <span>Volume: <span className="text-green-400 font-bold">{marketplaceStats[0].value}</span></span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* NFT Grid */}
-              <div className={viewMode === "grid" ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
+              <div className={viewMode === "grid" ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-start" : "space-y-4"}>
                 {/* Insert sponsor ad every 6 NFTs in grid view */}
                 {sortedNFTs.map((nft, index) => (
                   <React.Fragment key={`nft-${nft.id}`}>
@@ -553,141 +633,198 @@ const NFTMarketplace = () => {
                     whileHover={{ scale: 1.02 }}
                     onClick={() => setSelectedNFT(nft)}
                   >
-                    <Card className="bg-gray-800/50 border-gray-700 overflow-hidden group-hover:border-orange-500 transition-all duration-300 backdrop-blur-sm">
+                    <Card className={`bg-gradient-to-br from-gray-800/50 via-gray-900/50 to-black/50 border-gray-700/50 overflow-hidden group-hover:border-orange-500 group-hover:shadow-2xl group-hover:shadow-orange-500/10 transition-all duration-500 backdrop-blur-sm transform group-hover:scale-[1.02] group-hover:-rotate-1 ${index % 3 === 0 ? 'rounded-3xl' : index % 3 === 1 ? 'rounded-2xl rotate-1' : 'rounded-xl -rotate-1'}`}>
                       {/* NFT Preview */}
-                      <div className="relative aspect-square">
+                      <div className={`relative ${index % 4 === 0 ? 'aspect-[4/5]' : index % 4 === 1 ? 'aspect-square' : index % 4 === 2 ? 'aspect-[5/4]' : 'aspect-[3/4]'} overflow-hidden`}>
                         <Image
                           src={nft.thumbnail}
                           alt={nft.title}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         
-                        {/* Rarity Glow */}
-                        <div className={`absolute inset-0 bg-gradient-to-t ${getRarityColor(nft.rarity)} opacity-20`} />
+                        {/* Animated Rarity Glow */}
+                        <motion.div 
+                          className={`absolute inset-0 bg-gradient-to-t ${getRarityColor(nft.rarity)} opacity-30`}
+                          animate={{
+                            opacity: [0.2, 0.4, 0.2]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: "easeInOut"
+                          }}
+                        />
                         
-                        {/* Overlays */}
-                        <div className="absolute top-3 left-3">
-                          <Badge className={`${getRarityBadgeColor(nft.rarity)} font-bold`}>
-                            {nft.rarity}
+                        {/* Dynamic Corner Badges */}
+                        <div className="absolute top-4 left-4 transform -rotate-12">
+                          <motion.div
+                            animate={{ 
+                              rotate: [-12, -8, -12],
+                              scale: [1, 1.05, 1]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Number.POSITIVE_INFINITY
+                            }}
+                          >
+                            <Badge className={`${getRarityBadgeColor(nft.rarity)} font-bold text-xs px-3 py-1 shadow-lg`}>
+                              ✨ {nft.rarity}
+                            </Badge>
+                          </motion.div>
+                        </div>
+                        
+                        <div className="absolute top-4 right-4 flex flex-col space-y-2 items-end">
+                          <motion.div
+                            animate={{ scale: [1, 1.05, 1] }}
+                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                          >
+                            <Badge className="bg-green-500/90 backdrop-blur-sm text-white rounded-full px-3 py-1 shadow-lg">
+                              <ShoppingCart className="w-3 h-3 mr-1" />
+                              Buy Now
+                            </Badge>
+                          </motion.div>
+                          <Badge className="bg-black/60 backdrop-blur-sm text-white rounded-full px-3 py-1">
+                            🎬 {nft.duration}
                           </Badge>
                         </div>
                         
-                        <div className="absolute top-3 right-3 flex space-x-2">
-                          {nft.listingType === "auction" && (
-                            <Badge className="bg-red-500 text-white animate-pulse">
-                              <Timer className="w-3 h-3 mr-1" />
-                              {nft.timeLeft}
-                            </Badge>
-                          )}
-                          <Badge className="bg-black/70 text-white">
-                            {nft.duration}
-                          </Badge>
-                        </div>
-                        
-                        <div className="absolute bottom-3 left-3 right-3 flex justify-between">
-                          <div className="flex space-x-2">
-                            <Badge className="bg-black/70 text-white text-xs">
-                              <Eye className="w-3 h-3 mr-1" />
-                              {nft.views}
-                            </Badge>
-                            <Badge className="bg-black/70 text-white text-xs">
-                              <Heart className="w-3 h-3 mr-1" />
-                              {nft.likes}
+                        {/* Floating Stats */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex justify-between items-end">
+                            <div className="flex space-x-2">
+                              <motion.div
+                                className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs flex items-center space-x-1"
+                                whileHover={{ scale: 1.1 }}
+                              >
+                                <Eye className="w-3 h-3 text-blue-400" />
+                                <span>{nft.views}</span>
+                              </motion.div>
+                              <motion.div
+                                className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs flex items-center space-x-1"
+                                whileHover={{ scale: 1.1 }}
+                              >
+                                <Heart className="w-3 h-3 text-red-400" />
+                                <span>{nft.likes}</span>
+                              </motion.div>
+                            </div>
+                            <Badge className="bg-gradient-to-r from-orange-500 to-orange-600 text-black font-bold rounded-full px-3 py-1 shadow-lg">
+                              🎮 {nft.type}
                             </Badge>
                           </div>
-                          <Badge className="bg-orange-500 text-black font-bold">
-                            {nft.type}
-                          </Badge>
                         </div>
                         
-                        {/* Play Button Overlay */}
-                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        {/* Enhanced Play Button Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                           <motion.div
-                            className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center"
-                            whileHover={{ scale: 1.1 }}
+                            className="relative"
+                            initial={{ scale: 0, rotate: 0 }}
+                            whileHover={{ 
+                              scale: 1.2, 
+                              rotate: 360,
+                              background: "linear-gradient(45deg, #ff6f00, #ff8f00, #ff6f00)"
+                            }}
+                            transition={{ duration: 0.5 }}
                           >
-                            <Play className="w-8 h-8 text-black ml-1" />
+                            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/50 border-4 border-white/20">
+                              <Play className="w-10 h-10 text-black ml-1" fill="currentColor" />
+                            </div>
+                            <motion.div
+                              className="absolute -inset-2 border-2 border-orange-400 rounded-full"
+                              animate={{ rotate: [0, 360] }}
+                              transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                            />
                           </motion.div>
                         </div>
                       </div>
                       
                       {/* NFT Info */}
-                      <div className="p-6">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex-1">
-                            <h3 className="font-bold text-white text-lg mb-1 group-hover:text-orange-400 transition-colors line-clamp-1">
-                              {nft.title}
-                            </h3>
-                            <p className="text-gray-400 text-sm line-clamp-2 mb-2">{nft.description}</p>
-                          </div>
+                      <div className="p-6 flex flex-col h-full">
+                        {/* Title and Description Section */}
+                        <div className="mb-4">
+                          <h3 className="font-bold text-white text-lg mb-2 group-hover:text-orange-400 transition-colors line-clamp-2 leading-tight">
+                            {nft.title}
+                          </h3>
+                          <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">{nft.description}</p>
                         </div>
                         
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2">
-                            <Image
-                              src="/placeholder.svg?height=24&width=24&text=C"
-                              alt={nft.creator}
-                              width={24}
-                              height={24}
-                              className="rounded-full"
-                            />
+                        {/* Creator and Game Info Section */}
+                        <div className="flex items-center justify-between mb-4 bg-gray-900/30 rounded-lg p-3">
+                          <div className="flex items-center space-x-3">
+                            <div className="relative">
+                              <Image
+                                src="/placeholder.svg?height=32&width=32&text=C"
+                                alt={nft.creator}
+                                width={32}
+                                height={32}
+                                className="rounded-full border-2 border-orange-500/30"
+                              />
+                              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-gray-800"></div>
+                            </div>
                             <div>
-                              <div className="text-xs text-gray-500">Creator</div>
-                              <div className="text-sm font-medium text-orange-400">{nft.creator}</div>
+                              <div className="text-xs text-gray-500 uppercase tracking-wide">Creator</div>
+                              <div className="text-sm font-semibold text-orange-400 truncate max-w-[100px]">{nft.creator}</div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-xs text-gray-500">Game</div>
-                            <div className="text-sm font-medium text-white">{nft.game}</div>
+                            <div className="text-xs text-gray-500 uppercase tracking-wide">Game</div>
+                            <div className="text-sm font-semibold text-white">{nft.game}</div>
                           </div>
                         </div>
                         
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {nft.tags.slice(0, 3).map((tag, tagIndex) => (
-                            <Badge key={tagIndex} className="bg-gray-700 text-gray-300 text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
+                        {/* Tags Section */}
+                        <div className="mb-4">
+                          <div className="flex flex-wrap gap-2">
+                            {nft.tags.slice(0, 3).map((tag, tagIndex) => (
+                              <Badge key={tagIndex} className="bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs px-2 py-1">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
                         
-                        {/* Price and Actions */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="text-xs text-gray-500 mb-1">
-                              {nft.listingType === "auction" ? "Current Bid" : "Price"}
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-2xl font-black text-orange-400">
-                                {nft.price} {nft.currency}
-                              </span>
-                              <span className="text-sm text-gray-400">
-                                (${nft.usdPrice})
-                              </span>
+                        {/* Price and Actions Section */}
+                        <div className="mt-auto">
+                          {/* Price Display */}
+                          <div className="bg-gray-800/50 rounded-lg p-4 mb-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+                                  Instant Price
+                                </div>
+                                <div className="flex items-baseline space-x-2">
+                                  <span className="text-2xl font-black text-orange-400">
+                                    {nft.price}
+                                  </span>
+                                  <span className="text-sm font-medium text-orange-300">
+                                    {nft.currency}
+                                  </span>
+                                </div>
+                                <div className="text-xs text-gray-400 mt-1">
+                                  ≈ ${nft.usdPrice}
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-xs text-green-400 uppercase tracking-wide mb-1">Status</div>
+                                <div className="text-sm font-bold text-green-400">Available</div>
+                              </div>
                             </div>
                           </div>
-                          <div className="flex space-x-2">
+                          
+                          {/* Action Buttons */}
+                          <div className="flex items-center space-x-2">
                             <Button
                               size="sm"
-                              className="bg-orange-500 hover:bg-orange-600 text-black font-bold"
+                              onClick={() => handlePurchase(nft)}
+                              className="flex-1 bg-orange-500 hover:bg-orange-600 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25"
                             >
-                              {nft.listingType === "auction" ? (
-                                <>
-                                  <Gavel className="w-4 h-4 mr-1" />
-                                  Bid
-                                </>
-                              ) : (
-                                <>
-                                  <ShoppingCart className="w-4 h-4 mr-1" />
-                                  Buy
-                                </>
-                              )}
+                              <ShoppingCart className="w-4 h-4 mr-2" />
+                              Buy Now
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-gray-600 text-white hover:bg-gray-700"
+                              className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white p-2 transition-all duration-200"
                             >
                               <Heart className="w-4 h-4" />
                             </Button>
@@ -906,8 +1043,8 @@ const NFTMarketplace = () => {
                         <span className="text-white">Fixed Price</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="radio" name="listingType" value="auction" className="text-orange-500" />
-                        <span className="text-white">Auction</span>
+                        <input type="radio" name="listingType" value="instant" className="text-orange-500" />
+                        <span className="text-white">Instant Sale</span>
                       </label>
                     </div>
                     
@@ -1254,28 +1391,20 @@ const NFTMarketplace = () => {
                       <div className="text-gray-400">${selectedNFT.usdPrice}</div>
                     </div>
                     
-                    {selectedNFT.listingType === "auction" && (
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-red-400 font-bold">Auction ends in:</span>
-                          <span className="text-white font-bold">{selectedNFT.timeLeft}</span>
-                        </div>
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-green-400 font-bold">Status:</span>
+                        <span className="text-white font-bold">Available for Purchase</span>
                       </div>
-                    )}
+                    </div>
                     
                     <div className="flex space-x-3">
-                      <Button className="flex-1 bg-orange-500 hover:bg-orange-600 text-black font-bold py-3">
-                        {selectedNFT.listingType === "auction" ? (
-                          <>
-                            <Gavel className="w-5 h-5 mr-2" />
-                            Place Bid
-                          </>
-                        ) : (
-                          <>
-                            <ShoppingCart className="w-5 h-5 mr-2" />
-                            Buy Now
-                          </>
-                        )}
+                      <Button 
+                        onClick={() => handlePurchase(selectedNFT)}
+                        className="flex-1 bg-orange-500 hover:bg-orange-600 text-black font-bold py-3"
+                      >
+                        <ShoppingCart className="w-5 h-5 mr-2" />
+                        Buy Now
                       </Button>
                       <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-700">
                         <Heart className="w-5 h-5" />
@@ -1297,6 +1426,73 @@ const NFTMarketplace = () => {
           </motion.div>
         </motion.div>
       )}
+
+      {/* Purchase Modal with Payment Gateway */}
+      <AnimatePresence>
+        {showPurchaseModal && selectedNFT && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowPurchaseModal(false)}
+          >
+            <motion.div
+              className="bg-gray-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-white">Complete Purchase</h3>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowPurchaseModal(false)}
+                    className="border-gray-600 text-white hover:bg-gray-700"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  {/* NFT Preview */}
+                  <div className="space-y-4">
+                    <div className="aspect-square rounded-xl overflow-hidden bg-gray-800">
+                      <img
+                        src={selectedNFT.thumbnail}
+                        alt={selectedNFT.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-white">{selectedNFT.title}</h4>
+                      <p className="text-gray-400">{selectedNFT.description}</p>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <span className="text-sm text-gray-500">Created by</span>
+                        <span className="text-orange-400 font-bold">{selectedNFT.creator}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Payment Gateway */}
+                  <div>
+                    <PaymentGateways
+                      amount={selectedNFT.price}
+                      currency={selectedNFT.currency}
+                      nftTitle={selectedNFT.title}
+                      onPaymentComplete={handlePaymentComplete}
+                      premiumFeatures={true}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

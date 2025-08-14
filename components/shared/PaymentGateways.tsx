@@ -61,8 +61,8 @@ interface PaymentGatewaysProps {
 }
 
 const PaymentGateways = ({
-  amount = "2.5",
-  currency = "ETH",
+  amount = "12.5",
+  currency = "SOL",
   nftTitle = "Epic CryptoBoxers Knockout",
   onPaymentComplete,
   premiumFeatures = true
@@ -72,14 +72,27 @@ const PaymentGateways = ({
   const [isProcessing, setIsProcessing] = useState(false)
   const [showPrivateMode, setShowPrivateMode] = useState(false)
   const [conversionRates, setConversionRates] = useState({
+    solToUsd: 100,
     ethToUsd: 1700,
     btcToUsd: 43500,
     usdcToUsd: 1
   })
-  const [gasEstimate, setGasEstimate] = useState("0.025")
+  const [gasEstimate, setGasEstimate] = useState("0.00001") // Solana transaction fees are much lower
 
   const paymentMethods: PaymentMethod[] = [
-    // Crypto payments
+    // Crypto payments (Solana first - cost efficient)
+    {
+      id: 'solana',
+      name: 'Solana',
+      type: 'crypto',
+      icon: '☀️',
+      supported: true,
+      fees: '0.1%',
+      processingTime: '< 30 seconds',
+      description: 'Ultra-low fees & fast',
+      popular: true,
+      networks: ['Mainnet', 'Devnet']
+    },
     {
       id: 'ethereum',
       name: 'Ethereum',
@@ -89,7 +102,7 @@ const PaymentGateways = ({
       fees: '0.5%',
       processingTime: '2-5 minutes',
       description: 'Most popular for NFTs',
-      popular: true,
+      popular: false,
       networks: ['Mainnet', 'Polygon', 'Arbitrum']
     },
     {
@@ -197,17 +210,19 @@ const PaymentGateways = ({
     const fee = baseAmount * feePercent
     
     if (method.type === 'crypto') {
-      // Add gas fees for crypto
-      const gasInEth = parseFloat(gasEstimate)
+      // Add gas fees for crypto - Solana has much lower fees
+      const gasInNative = parseFloat(gasEstimate)
+      const isLowFeeNetwork = method.id === 'solana' || method.id === 'play-tokens'
       return {
         subtotal: baseAmount,
         fees: fee,
-        gasFees: method.id === 'play-tokens' ? 0 : gasInEth,
-        total: baseAmount + fee + (method.id === 'play-tokens' ? 0 : gasInEth)
+        gasFees: isLowFeeNetwork ? 0.00001 : gasInNative, // Solana fees are negligible
+        total: baseAmount + fee + (isLowFeeNetwork ? 0.00001 : gasInNative)
       }
     } else {
-      // Fiat conversion
-      const usdAmount = baseAmount * conversionRates.ethToUsd
+      // Fiat conversion - use SOL rate if current currency is SOL
+      const conversionRate = currency === 'SOL' ? conversionRates.solToUsd : conversionRates.ethToUsd
+      const usdAmount = baseAmount * conversionRate
       const usdFee = usdAmount * feePercent
       return {
         subtotal: usdAmount,
